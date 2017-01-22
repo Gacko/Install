@@ -19,7 +19,7 @@ auth --enableshadow --passalgo=sha512
 rootpw "toor"
 
 # Network
-network --bootproto=dhcp --device=eth0 --activate
+network --device=eth0 --bootproto=dhcp --hostname=<?= $_GET["hostname"] ?> --activate
 
 # Reboot
 reboot --eject
