@@ -55,7 +55,7 @@ function install_epel_release {
 function install_packages {
   echo "Installing packages on $1."
 
-  ssh root@$1 "yum install --assumeyes --nogpgcheck make gcc bzip2 dkms nano avahi nss-mdns"
+  ssh root@$1 "yum install --assumeyes --nogpgcheck kernel-devel make gcc bzip2 dkms nano avahi nss-mdns"
 
   echo "Installed packages on $1." ; echo
 }
