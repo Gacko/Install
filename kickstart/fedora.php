@@ -26,7 +26,6 @@ reboot --eject
 
 %packages
 
-@^minimal
-@core
+@^custom-environment
 
 %end
