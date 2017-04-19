@@ -21,6 +21,10 @@ keyboard --vckeymap=de-nodeadkeys --xlayouts="de (nodeadkeys)"
 auth --enableshadow --passalgo=sha512
 rootpw "toor"
 
+# Security
+selinux --disabled
+firewall --disabled
+
 # Reboot
 reboot --eject
 

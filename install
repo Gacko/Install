@@ -1,14 +1,6 @@
 #!/bin/bash
 DIR="$(dirname $0)"
 
-function disable_selinux_and_firewall {
-  echo "Disabling SELinux and firewall."
-
-  ssh root@$1 "setenforce 0 ; sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config ; systemctl stop firewalld ; systemctl disable firewalld"
-
-  echo "Disabled SELinux and firewall." ; echo
-}
-
 function install_keys {
   echo "Installing keys for $1."
 
@@ -92,9 +84,6 @@ function install_guest_additions {
 for server in $@
 do
   echo "Installing $server."
-
-  # Disable SELinux first of all."
-  disable_selinux_and_firewall $server
 
   for user in root
   do
