@@ -3,7 +3,7 @@ text
 cdrom
 
 # Network
-network --device=eth0 --bootproto=dhcp --hostname=<?= $_GET["hostname"] ?> --activate
+network --device=eth1 --bootproto=dhcp --hostname=<?= $_GET["hostname"] ?> --activate
 
 # Partition
 ignoredisk --only-use=sda
