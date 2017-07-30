@@ -23,7 +23,7 @@ function install_bash {
 function clean_files {
   echo "Removing unnecessary files from $1."
 
-  ssh $1 "rm -rf anaconda-ks.cfg .bash_logout .bash_history .cshrc .tcshrc"
+  ssh $1 "rm -rf *-ks.cfg .bash_logout .bash_history .cshrc .tcshrc"
 
   echo "Removed unnecessary files from $1." ; echo
 }
@@ -36,49 +36,12 @@ function upgrade_packages {
   echo "Upgraded packages of $1." ; echo
 }
 
-function install_epel_release {
-  echo "Installing EPEL release on $1."
-
-  ssh root@$1 "yum install --assumeyes --nogpgcheck epel-release"
-
-  echo "Installed EPEL release on $1." ; echo
-}
-
-function install_packages {
-  echo "Installing packages on $1."
-
-  ssh root@$1 "yum install --assumeyes --nogpgcheck kernel-devel make gcc bzip2 dkms nano avahi nss-mdns"
-
-  echo "Installed packages on $1." ; echo
-}
-
-function setup_modules {
-  echo "Setting up modules on $1."
-
-  ssh root@$1 "echo 'blacklist intel_rapl' > /etc/modprobe.d/blacklist.conf"
-
-  echo "Setup modules on $1." ; echo
-}
-
 function reboot_server {
   echo "Rebooting $1."
 
   ssh root@$1 "shutdown -r now"
 
   echo "Rebooted $1." ; echo
-}
-
-function wait_for_reboot {
-  echo "Waiting for reboot. Press enter to continue..."
-  read
-}
-
-function install_guest_additions {
-  echo "Installing guest additions."
-
-  ssh root@$1 "mount /dev/cdrom /mnt ; /mnt/VBoxLinuxAdditions.run"
-
-  echo "Installed guest additions." ; echo
 }
 
 for server in $@
@@ -99,27 +62,6 @@ do
 
   # Upgrade packages.
   upgrade_packages $server
-
-  # Install EPEL release.
-  install_epel_release $server
-
-  # Upgrade packages.
-  upgrade_packages $server
-
-  # Install packages.
-  install_packages $server
-
-  # Setup modules.
-  setup_modules $server
-
-  # Reboot server.
-  reboot_server $server
-
-  # Wait for reboot.
-  wait_for_reboot
-
-  # Install guest additions.
-  install_guest_additions $server
 
   # Reboot server.
   reboot_server $server
