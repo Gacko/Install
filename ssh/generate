@@ -2,7 +2,7 @@
 DIR="$(dirname $0)"
 
 echo "Generating new key pair."
-ssh-keygen -t rsa -b 4096 -N "" -C "" -f $DIR/id_rsa
+ssh-keygen -t rsa -b 4096 -N "" -C "" -f $DIR/id_rsa -o
 echo "Generated new key pair." ; echo
 
 echo "Generating authorized keys from local and generated public key."
