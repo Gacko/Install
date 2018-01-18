@@ -49,13 +49,11 @@ nano
 %pre
 
 #!/bin/sh
-echo "network --device=eth1 --bootproto=dhcp --activate" > /tmp/network.ks
-
 for argument in `cat /proc/cmdline`
 do
   case "$argument" in
     hostname=*)
-      echo "network --device=eth1 --bootproto=dhcp --$argument --activate" > /tmp/network.ks
+      echo "network --$argument" > /tmp/network.ks
       ;;
   esac;
 done
