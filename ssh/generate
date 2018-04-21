@@ -1,14 +1,11 @@
 #!/bin/bash
-DIR="$(dirname $0)"
+# Get directory.
+dir="$(dirname "$0")"
 
-echo "Generating new key pair."
-ssh-keygen -t rsa -b 4096 -N "" -C "" -f $DIR/id_rsa -o
-echo "Generated new key pair." ; echo
-
-echo "Generating authorized keys from local and generated public key."
-cat $HOME/.ssh/id_rsa.pub $DIR/id_rsa.pub > $DIR/authorized_keys
-echo "Generated authorized keys from local and generated public key." ; echo
+echo "Generating authorized keys from local public key."
+cp "$HOME/.ssh/id_rsa.pub" "$dir/authorized_keys"
+echo "Generated authorized keys from local public key." ; echo
 
 echo "Fixing permissions."
-chmod 600 $DIR/id_rsa $DIR/id_rsa.pub $DIR/authorized_keys
+chmod 600 "$dir/authorized_keys"
 echo "Fixed permissions."

@@ -1,70 +1,55 @@
 #!/bin/bash
-DIR="$(dirname $0)"
+# Get directory.
+dir="$(dirname "$0")"
 
-function install_keys {
-  echo "Installing keys for $1."
-
-  cat $DIR/ssh/authorized_keys | ssh $1 "mkdir -p .ssh ; chmod 700 .ssh ; cat > .ssh/authorized_keys ; chmod 600 .ssh/authorized_keys"
-  scp $DIR/ssh/id_rsa $DIR/ssh/id_rsa.pub $1:
-  ssh $1 "mv id_rsa id_rsa.pub .ssh/ ; chmod 600 .ssh/id_rsa .ssh/id_rsa.pub"
-
-  echo "Installed keys for $1." ; echo
+# Installs authorized keys to user.
+function install_authorized_keys {
+  echo "Installing authorized keys to user '$1'."
+  cat "$dir/ssh/authorized_keys" | ssh "$1" "mkdir -p .ssh ; chmod 700 .ssh ; cat > .ssh/authorized_keys ; chmod 600 .ssh/authorized_keys"
+  echo "Installed authorized keys to user '$1'." ; echo
 }
 
-function install_bash {
-  echo "Installing bash profile for $1."
-
-  scp $DIR/bash/bashrc $DIR/bash/bash_profile $1:
-  ssh $1 "mv bashrc .bashrc ; mv bash_profile .bash_profile ; chmod 600 .bashrc .bash_profile"
-
-  echo "Installed bash profile for $1." ; echo
-}
-
+# Cleans files of user.
 function clean_files {
-  echo "Removing unnecessary files from $1."
-
-  ssh $1 "rm -rf *-ks.cfg .bash_logout .bash_history .cshrc .tcshrc"
-
-  echo "Removed unnecessary files from $1." ; echo
+  echo "Cleaning files of user '$1'."
+  ssh "$1" "rm -rf *-ks.cfg .bash_logout .bash_history .cshrc .tcshrc"
+  echo "Cleaned files of user '$1'." ; echo
 }
 
+# Upgrades packages of host.
 function upgrade_packages {
-  echo "Upgrading packages of $1."
-
-  ssh root@$1 "yum upgrade --assumeyes --nogpgcheck"
-
-  echo "Upgraded packages of $1." ; echo
+  echo "Upgrading packages of host '$1'."
+  ssh "root@$1" "yum upgrade --assumeyes --nogpgcheck"
+  echo "Upgraded packages of host '$1'." ; echo
 }
 
-function reboot_server {
-  echo "Rebooting $1."
-
-  ssh root@$1 "shutdown -r now"
-
-  echo "Rebooted $1." ; echo
+# Reboots host.
+function reboot {
+  echo "Rebooting host '$1'."
+  ssh "root@$1" "systemctl reboot"
+  echo "Rebooted host '$1'." ; echo
 }
 
-for server in $@
+# Iterate hosts.
+for host in $@
 do
-  echo "Installing $server."
+  echo "Installing host '$host'."
 
+  # Iterate users.
   for user in root
   do
-    # Install keys.
-    install_keys $user@$server
-
-    # Install bash profile.
-    install_bash $user@$server
+    # Install authorized keys.
+    install_authorized_keys "$user@$host"
 
     # Clean files.
-    clean_files $user@$server
+    clean_files "$user@$host"
   done
 
   # Upgrade packages.
-  upgrade_packages $server
+  upgrade_packages "$host"
 
-  # Reboot server.
-  reboot_server $server
+  # Reboot host.
+  reboot "$host"
 
-  echo "Installed $server."
+  echo "Installed host '$host'."
 done
