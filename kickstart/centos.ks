@@ -41,7 +41,6 @@ reboot --eject
 -sudo
 -vim-minimal
 
-avahi
 nano
 
 %end
