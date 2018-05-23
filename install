@@ -19,7 +19,7 @@ function clean_files {
 # Upgrades packages of host.
 function upgrade_packages {
   echo "Upgrading packages of host '$1'."
-  ssh "root@$1" "yum upgrade --assumeyes --nogpgcheck"
+  ssh "root@$1" "yum upgrade --assumeyes --nogpgcheck ; yum autoremove --assumeyes"
   echo "Upgraded packages of host '$1'." ; echo
 }
 
