@@ -37,6 +37,7 @@ reboot --eject
 -chrony
 -dhclient
 -firewalld
+-grubby
 -iprutils
 -kbd
 -kexec-tools
@@ -46,6 +47,7 @@ reboot --eject
 -rsyslog
 -sudo
 -vim-minimal
+-xfsprogs
 
 nano
 
