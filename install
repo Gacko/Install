@@ -12,7 +12,7 @@ function install_authorized_keys {
 # Cleans files of user.
 function clean_files {
   echo "Cleaning files of user '$1'."
-  ssh "$1" "rm -rf *-ks.cfg .bash_logout .bash_history .cshrc .tcshrc"
+  ssh "$1" "rm -rf *-ks.cfg .bash_history"
   echo "Cleaned files of user '$1'." ; echo
 }
 

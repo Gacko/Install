@@ -31,13 +31,19 @@ reboot --eject
 
 @core --nodefaults
 
+-acl
 -biosdevname
 -btrfs-progs
 -chrony
+-dhclient
 -firewalld
 -iprutils
+-kbd
 -kexec-tools
+-parted
 -plymouth
+-rootfiles
+-rsyslog
 -sudo
 -vim-minimal
 
