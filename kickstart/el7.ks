@@ -31,6 +31,7 @@ reboot --eject
 
 @core --nodefaults
 
+-NetworkManager-config-server
 -acl
 -biosdevname
 -btrfs-progs
@@ -64,5 +65,19 @@ do
       ;;
   esac;
 done
+
+%end
+
+%post
+
+#!/bin/sh
+# Remove UEK kernel.
+yum autoremove --assume kernel-uek
+
+# Set default kernel.
+sed -i.bak 's/DEFAULTKERNEL=kernel-uek/DEFAULTKERNEL=kernel/g' /etc/sysconfig/kernel
+
+# Make Grub config.
+grub2-mkconfig --output /boot/grub2/grub.cfg
 
 %end
