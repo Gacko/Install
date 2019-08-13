@@ -72,7 +72,7 @@ done
 
 #!/bin/sh
 # Remove UEK kernel.
-yum autoremove --assume kernel-uek
+yum autoremove --assumeyes kernel-uek
 
 # Set default kernel.
 sed -i.bak 's/DEFAULTKERNEL=kernel-uek/DEFAULTKERNEL=kernel/g' /etc/sysconfig/kernel
