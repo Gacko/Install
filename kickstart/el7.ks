@@ -10,7 +10,7 @@ ignoredisk --only-use=sda
 zerombr
 clearpart --drives=sda --all
 bootloader --boot-drive=sda --location=mbr
-autopart --type=lvm
+autopart --type=lvm --fstype=ext4
 
 # Localization
 timezone Europe/Berlin --isUtc
