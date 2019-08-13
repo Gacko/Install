@@ -51,6 +51,7 @@ reboot --eject
 -xfsprogs
 
 nano
+oraclelinux-release-el7
 
 %end
 
