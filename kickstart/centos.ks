@@ -41,6 +41,7 @@ reboot --eject
 -iprutils
 -kbd
 -kexec-tools
+-linux-firmware
 -parted
 -plymouth
 -rootfiles
