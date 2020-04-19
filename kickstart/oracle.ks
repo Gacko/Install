@@ -2,9 +2,6 @@
 text
 cdrom
 
-# Network
-%include /tmp/network.ks
-
 # Partition
 ignoredisk --only-use=sda
 zerombr
@@ -32,17 +29,12 @@ reboot --eject
 @core --nodefaults
 
 -NetworkManager-config-server
--acl
--biosdevname
 -btrfs-progs
--chrony
 -dhclient
 -firewalld
--grubby
 -iprutils
 -kbd
 -kexec-tools
--linux-firmware
 -parted
 -plymouth
 -rootfiles
@@ -56,20 +48,6 @@ oraclelinux-release-el7
 
 %end
 
-%pre
-
-#!/bin/sh
-for argument in `cat /proc/cmdline`
-do
-  case "$argument" in
-    hostname=*)
-      echo "network --$argument" > /tmp/network.ks
-      ;;
-  esac;
-done
-
-%end
-
 %post
 
 #!/bin/sh
@@ -77,7 +55,7 @@ done
 yum autoremove --assumeyes kernel-uek
 
 # Set default kernel.
-sed -i.bak 's/DEFAULTKERNEL=kernel-uek/DEFAULTKERNEL=kernel/g' /etc/sysconfig/kernel
+sed -i 's/DEFAULTKERNEL=kernel-uek/DEFAULTKERNEL=kernel/g' /etc/sysconfig/kernel
 
 # Make Grub config.
 grub2-mkconfig --output /boot/grub2/grub.cfg

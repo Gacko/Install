@@ -2,9 +2,6 @@
 text
 cdrom
 
-# Network
-%include /tmp/network.ks
-
 # Partition
 ignoredisk --only-use=sda
 zerombr
@@ -31,17 +28,12 @@ reboot --eject
 
 @core --nodefaults
 
--acl
--biosdevname
 -btrfs-progs
--chrony
 -dhclient
 -firewalld
--grubby
 -iprutils
 -kbd
 -kexec-tools
--linux-firmware
 -parted
 -plymouth
 -rootfiles
@@ -51,19 +43,5 @@ reboot --eject
 -xfsprogs
 
 nano
-
-%end
-
-%pre
-
-#!/bin/sh
-for argument in `cat /proc/cmdline`
-do
-  case "$argument" in
-    hostname=*)
-      echo "network --$argument" > /tmp/network.ks
-      ;;
-  esac;
-done
 
 %end
