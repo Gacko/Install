@@ -28,7 +28,6 @@ reboot --eject
 
 @core --nodefaults
 
--NetworkManager-config-server
 -btrfs-progs
 -dhclient
 -firewalld
