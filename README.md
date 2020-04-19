@@ -1,2 +1,2 @@
 # Install
-Some bash scripts for setting up Red Hat based distributions.
+Kickstarts and bash script for setting up Red Hat based distributions.
