@@ -1,55 +1,23 @@
 #!/bin/bash
-# Get directory.
-dir="$(dirname "$0")"
-
-# Installs authorized keys to user.
-function install_authorized_keys {
-  echo "Installing authorized keys to user '$1'."
-  cat "$dir/ssh/authorized_keys" | ssh "$1" "mkdir -p .ssh ; chmod 700 .ssh ; cat > .ssh/authorized_keys ; chmod 600 .ssh/authorized_keys"
-  echo "Installed authorized keys to user '$1'." ; echo
-}
-
-# Cleans files of user.
-function clean_files {
-  echo "Cleaning files of user '$1'."
-  ssh "$1" "rm -rf *-ks.cfg .bash_history"
-  echo "Cleaned files of user '$1'." ; echo
-}
-
-# Upgrades packages of host.
-function upgrade_packages {
-  echo "Upgrading packages of host '$1'."
-  ssh "root@$1" "yum upgrade --assumeyes --nogpgcheck ; yum autoremove --assumeyes"
-  echo "Upgraded packages of host '$1'." ; echo
-}
-
-# Reboots host.
-function reboot {
-  echo "Rebooting host '$1'."
-  ssh "root@$1" "systemctl reboot"
-  echo "Rebooted host '$1'." ; echo
-}
-
 # Iterate hosts.
 for host in $@
 do
   echo "Installing host '$host'."
 
-  # Iterate users.
-  for user in root
-  do
-    # Install authorized keys.
-    install_authorized_keys "$user@$host"
-
-    # Clean files.
-    clean_files "$user@$host"
-  done
+  # Install authorized keys.
+  echo "Installing authorized keys to user 'root@$host'."
+  cat "$HOME/.ssh/id_rsa.pub" | ssh "root@$host" "mkdir -p .ssh ; chmod 700 .ssh ; cat > .ssh/authorized_keys ; chmod 600 .ssh/authorized_keys"
+  echo "Installed authorized keys to user 'root@$host'." ; echo
 
   # Upgrade packages.
-  upgrade_packages "$host"
+  echo "Upgrading packages of host '$host'."
+  ssh "root@$host" "yum upgrade --assumeyes --nogpgcheck ; yum autoremove --assumeyes"
+  echo "Upgraded packages of host '$host'." ; echo
 
   # Reboot host.
-  reboot "$host"
+  echo "Rebooting host '$host'."
+  ssh "root@$host" "reboot"
+  echo "Rebooted host '$host'." ; echo
 
   echo "Installed host '$host'."
 done
