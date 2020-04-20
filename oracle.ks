@@ -46,17 +46,3 @@ nano
 oraclelinux-release-el7
 
 %end
-
-%post
-
-#!/bin/sh
-# Remove UEK kernel.
-yum autoremove --assumeyes kernel-uek
-
-# Set default kernel.
-sed -i 's/DEFAULTKERNEL=kernel-uek/DEFAULTKERNEL=kernel/g' /etc/sysconfig/kernel
-
-# Make Grub config.
-grub2-mkconfig --output /boot/grub2/grub.cfg
-
-%end
