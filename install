@@ -14,7 +14,7 @@ do
   then
     # Transfer configuration directory.
     echo "Transferring configuration directory to host '$host'."
-    scp -r "$(dirname "$0")/etc/*" "root@$host:/etc/"
+    scp -r $(dirname "$0")/etc/* "root@$host:/etc/"
     echo "Transferred configuration directory to host '$host'." ; echo
   fi
 
