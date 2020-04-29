@@ -50,9 +50,6 @@ oraclelinux-release-el7
 %post
 
 #!/bin/sh
-# Remove UEK kernel.
-yum autoremove --assumeyes kernel-uek
-
 # Set default kernel.
 sed -i 's/DEFAULTKERNEL=kernel-uek/DEFAULTKERNEL=kernel/g' /etc/sysconfig/kernel
 
