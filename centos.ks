@@ -36,7 +36,6 @@ reboot --eject
 -kexec-tools
 -parted
 -plymouth
--rootfiles
 -rsyslog
 -sudo
 -vim-minimal
