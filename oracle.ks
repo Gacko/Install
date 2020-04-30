@@ -1,29 +1,30 @@
-# Basic
+# Basic.
 text
 cdrom
 
-# Partition
+# Partitioning.
 ignoredisk --only-use=sda
 zerombr
 clearpart --drives=sda --all
 bootloader --boot-drive=sda --location=mbr
 autopart --type=lvm --fstype=ext4
 
-# Localization
+# Localization.
 timezone Europe/Berlin --isUtc
 lang de_DE.UTF-8
 keyboard --vckeymap=de-nodeadkeys --xlayouts="de (nodeadkeys)"
 
-# Authorization
+# Authentication.
 auth --enableshadow --passalgo=sha512
 rootpw "toor"
 
-# Security
+# Security.
 selinux --disabled
 
-# Reboot
+# Reboot.
 reboot --eject
 
+# Packages.
 %packages --nocore
 
 @core --nodefaults
@@ -46,6 +47,7 @@ oraclelinux-release-el7
 
 %end
 
+# Post script.
 %post
 
 #!/bin/sh
