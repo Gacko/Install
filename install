@@ -6,16 +6,16 @@ do
 
   # Install authorized keys.
   echo "Installing authorized keys to user 'root@$host'."
-  ssh "root@$host" "mkdir -p .ssh ; chmod 700 .ssh ; cat > .ssh/authorized_keys ; chmod 600 .ssh/authorized_keys" < "$HOME/.ssh/id_rsa.pub"
+  ssh "root@$host" "mkdir -pm 700 .ssh ; cat > .ssh/authorized_keys ; chmod 600 .ssh/authorized_keys" < "$HOME/.ssh/id_rsa.pub"
   echo "Installed authorized keys to user 'root@$host'." ; echo
 
   # Check for existence of configuration directory.
   if [ -d "$(dirname "$0")/etc" ]
   then
-    # Transfer configuration directory.
-    echo "Transferring configuration directory to host '$host'."
+    # Transfer configuration.
+    echo "Transferring configuration to host '$host'."
     scp -r $(dirname "$0")/etc/* "root@$host:/etc/"
-    echo "Transferred configuration directory to host '$host'." ; echo
+    echo "Transferred configuration to host '$host'." ; echo
   fi
 
   # Upgrade packages.
