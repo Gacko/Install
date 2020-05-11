@@ -6,7 +6,7 @@ do
 
   # Install authorized keys.
   echo "Installing authorized keys to user 'root@$host'."
-  ssh "root@$host" "mkdir -pm 700 .ssh ; cat > .ssh/authorized_keys ; chmod 600 .ssh/authorized_keys" < "$HOME/.ssh/id_rsa.pub"
+  ssh "root@$host" "mkdir -pm 700 .ssh ; cat > .ssh/authorized_keys ; chmod 600 .ssh/authorized_keys" < "$HOME/.ssh/id_ed25519.pub"
   echo "Installed authorized keys to user 'root@$host'." ; echo
 
   # Check for existence of configuration directory.
